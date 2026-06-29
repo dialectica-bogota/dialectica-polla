@@ -866,7 +866,14 @@ window.exportCSV=async()=>{
   const err=document.getElementById("exportErr");
   err.textContent="";
   if(pwd!==ADMIN_PWD){err.textContent="Incorrect password.";return;}
-  const rows=[["Email","Full Name","Submitted At",...GM.map(m=>m.home+" vs "+m.away+" ("+m.date+")"),"Points","Exact","Winners"]];
+  const r32matches = KO_PHASES.find(p=>p.key==="r32")?.matches||[];
+  const r16matches = KO_PHASES.find(p=>p.key==="r16")?.matches||[];
+  const qfmatches  = KO_PHASES.find(p=>p.key==="qf")?.matches||[];
+  const sfmatches  = KO_PHASES.find(p=>p.key==="sf")?.matches||[];
+  const finmatches = KO_PHASES.find(p=>p.key==="fin")?.matches||[];
+  const allKOmatches = [...r32matches,...r16matches,...qfmatches,...sfmatches,...finmatches];
+  const allMatches = [...GM,...allKOmatches];
+  const rows=[["Email","Full Name","Submitted At",...allMatches.map(m=>m.home+" vs "+m.away+" ("+m.date+")"),"Points","Exact","Winners"]];
   try{
     const snap=await getDocs(collection(db,"predictions"));
     snap.forEach(d=>{
@@ -874,7 +881,7 @@ window.exportCSV=async()=>{
       const hasSub=data.submitted&&(data.submitted===true||(typeof data.submitted==="object"&&Object.values(data.submitted).some(Boolean)));
       if(!hasSub)return;
       const pr=data.preds||{};
-      const scores=GM.map(m=>{const p=pr[m.id];return(p&&p.h!==""&&p.a!=="")?(p.h+"-"+p.a):"";});
+      const scores=allMatches.map(m=>{const p=pr[m.id];return(p&&p.h!==""&&p.a!=="")?(p.h+"-"+p.a):"";});
       const{pts,ex,wn}=calcPts(pr);
       const ts=data.submittedAt?.toDate?.()?.toLocaleDateString()||"-";
       rows.push([data.email,data.name,ts,...scores,pts,ex,wn]);
