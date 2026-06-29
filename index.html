@@ -736,7 +736,7 @@ window.upd=(id,side,val)=>{
 window.submit=async(phase)=>{
   const ms=phase==="groups"?GM:KO_PHASES.find(p=>p.key===phase)?.matches||[];
   if(pStatus(phase)!=="open"){toast("⏰ Submission window is closed!","err");return;}
-  const missing=ms.filter(m=>!P[m.id]||P[m.id].h===""||P[m.id].a==="");
+  const missing=ms.filter(m=>!RESULTS[m.id]&&(!P[m.id]||P[m.id].h===""||P[m.id].a===""));
   if(missing.length){
     toast(`⚠ ${missing.length} matches still empty!`,"err");
     document.getElementById("h_"+missing[0].id)?.scrollIntoView({behavior:"smooth",block:"center"});
