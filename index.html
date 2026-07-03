@@ -333,6 +333,8 @@ const RESULTS = {
   "R9": {h:3, a:2},  // Belgium 3-2 Senegal AET (Jul 1)
   "R10":{h:2, a:0},  // USA 2-0 Bosnia (Jul 1)
   "R11":{h:3, a:0},  // Spain 3-0 Austria (Jul 2)
+  "R12":{h:2, a:1},  // Portugal 2-1 Croatia (Jul 2)
+  "R13":{h:2, a:0},  // Switzerland 2-0 Algeria (Jul 2)
 };
 
 const PHASES = {
@@ -441,16 +443,16 @@ const KO_PHASES = [
       {id:"R15",home:"Argentina",   hc:"ar",    away:"Cape Verde",  ac:"cv",   date:"Jul 3", time:"17:00"},
       {id:"R16",home:"Colombia",    hc:"co",    away:"Ghana",       ac:"gh",   date:"Jul 3", time:"20:30"},
     ]},
-  { key:"r16", label:"Round of 16", window:"Open: Jul 3 22:00 → Close: Jul 4 11:30 COT",
+  { key:"r16", label:"Round of 16", window:"Open: Jul 3 22:00 → Close: Jul 7 15:00 COT",
     matches:[
-      {id:"S1",home:"W R32-1",hc:"un",away:"W R32-2",ac:"un",date:"Jul 4",time:"12:00"},
-      {id:"S2",home:"W R32-3",hc:"un",away:"W R32-4",ac:"un",date:"Jul 4",time:"16:00"},
-      {id:"S3",home:"W R32-5",hc:"un",away:"W R32-6",ac:"un",date:"Jul 5",time:"14:00"},
-      {id:"S4",home:"W R32-7",hc:"un",away:"W R32-8",ac:"un",date:"Jul 5",time:"19:00"},
-      {id:"S5",home:"W R32-9",hc:"un",away:"W R32-10",ac:"un",date:"Jul 6",time:"14:00"},
-      {id:"S6",home:"W R32-11",hc:"un",away:"W R32-12",ac:"un",date:"Jul 6",time:"19:00"},
-      {id:"S7",home:"W R32-13",hc:"un",away:"W R32-14",ac:"un",date:"Jul 7",time:"14:00"},
-      {id:"S8",home:"W R32-15",hc:"un",away:"W R32-16",ac:"un",date:"Jul 7",time:"19:00"},
+      {id:"S1",home:"Canada",   hc:"ca",    away:"Morocco",  ac:"ma",    date:"Jul 4",time:"12:00",closeTime:new Date("2026-07-04T11:59:00-05:00")},
+      {id:"S2",home:"Paraguay", hc:"py",    away:"France",   ac:"fr",    date:"Jul 4",time:"16:00",closeTime:new Date("2026-07-04T15:59:00-05:00")},
+      {id:"S3",home:"Brazil",   hc:"br",    away:"Norway",   ac:"no",    date:"Jul 5",time:"15:00",closeTime:new Date("2026-07-05T14:59:00-05:00")},
+      {id:"S4",home:"Mexico",   hc:"mx",    away:"England",  ac:"gb-eng",date:"Jul 5",time:"19:00",closeTime:new Date("2026-07-05T18:59:00-05:00")},
+      {id:"S5",home:"Portugal", hc:"pt",    away:"Spain",    ac:"es",    date:"Jul 6",time:"14:00",closeTime:new Date("2026-07-06T13:59:00-05:00")},
+      {id:"S6",home:"USA",      hc:"us",    away:"Belgium",  ac:"be",    date:"Jul 6",time:"19:00",closeTime:new Date("2026-07-06T18:59:00-05:00")},
+      {id:"S7",home:"TBD",      hc:"un",    away:"TBD",      ac:"un",    date:"Jul 7",time:"11:00",closeTime:new Date("2026-07-07T10:59:00-05:00")},
+      {id:"S8",home:"TBD",      hc:"un",    away:"TBD",      ac:"un",    date:"Jul 7",time:"15:00",closeTime:new Date("2026-07-07T14:59:00-05:00")},
     ]},
   { key:"qf", label:"Quarter-finals", window:"Open: Jul 7 21:00 → Close: Jul 9 14:30 COT",
     matches:[
@@ -668,6 +670,7 @@ function renderPicks(){
           <input type="number" min="0" max="20" class="${cls}" id="h_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','h',this.value)">
           <span class="sd">–</span>
           <input type="number" min="0" max="20" class="${cls}" id="a_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','a',this.value)">
+          ${showLockBtn?`<button id="lock_${m.id}" class="lock-btn" onclick="lockMatch('${ph.key}','${m.id}')">🔒 Lock In</button>`:""}
         </div>
         <div class="mt away"><span class="tn">${m.away}</span>${flag(m.ac)}</div>
         <div class="mmeta">${m.date} · ${m.time} COT</div>
@@ -695,14 +698,17 @@ function renderPicks(){
     ph.matches.forEach(m=>{
       const p=P[m.id]||{h:"",a:""};
       const hasResult=RESULTS[m.id]!==undefined;
-      const lk=phSub||phClosed||hasResult;
+      const matchClosed=m.closeTime?new Date()>m.closeTime:false;
+      const lk=phSub||phClosed||hasResult||matchClosed;
       const cls=lk?"si lk":"si";
+      const showLockBtn=ph.key!=="groups"&&!hasResult&&!matchClosed&&!phClosed;
       h+=`<div class="mrow">
         <div class="mt home">${flag(m.hc)}<span class="tn">${m.home}</span></div>
         <div class="si-wrap">
           <input type="number" min="0" max="20" class="${cls}" id="h_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','h',this.value)">
           <span class="sd">–</span>
           <input type="number" min="0" max="20" class="${cls}" id="a_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','a',this.value)">
+          ${showLockBtn?`<button id="lock_${m.id}" class="lock-btn" onclick="lockMatch('${ph.key}','${m.id}')">🔒 Lock In</button>`:""}
         </div>
         <div class="mt away"><span class="tn">${m.away}</span>${flag(m.ac)}</div>
         <div class="mmeta">${m.date} · ${m.time} COT</div>
@@ -742,10 +748,36 @@ window.upd=(id,side,val)=>{
   P[id][side]=val;
 };
 
+window.lockMatch=async(phase, matchId)=>{
+  const ms=phase==="groups"?GM:KO_PHASES.find(p=>p.key===phase)?.matches||[];
+  const m=ms.find(x=>x.id===matchId);
+  if(!m){toast("Match not found","err");return;}
+  if(RESULTS[m.id]){toast("⏰ Match already finished!","err");return;}
+  if(m.closeTime&&new Date()>m.closeTime){toast("⏰ Lock-in window closed for this match!","err");return;}
+  const p=P[m.id];
+  if(!p||p.h===""||p.a===""){toast("⚠ Please enter a score first!","err");return;}
+  if(!S)S={};
+  try{
+    const allPreds={};
+    GM.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};});
+    KO_PHASES.forEach(ph=>ph.matches.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};;}));
+    allPreds[matchId]=p;
+    await setDoc(doc(db,"predictions",user.uid),{email:user.email,name:uName,predictions:allPreds,submittedAt:new Date().toISOString()},{merge:true});
+    toast(`🔒 ${m.home} vs ${m.away} locked in!`,"ok");
+    // Update button
+    const btn=document.getElementById("lock_"+matchId);
+    if(btn){btn.textContent="🔒 Locked";btn.disabled=true;btn.classList.add("locked");}
+  }catch(e){toast("Error saving: "+e.message,"err");}
+};
+
 window.submit=async(phase)=>{
   const ms=phase==="groups"?GM:KO_PHASES.find(p=>p.key===phase)?.matches||[];
   if(pStatus(phase)!=="open"){toast("⏰ Submission window is closed!","err");return;}
-  const missing=ms.filter(m=>!RESULTS[m.id]&&(!P[m.id]||P[m.id].h===""||P[m.id].a===""));
+  const missing=ms.filter(m=>{
+    if(RESULTS[m.id]) return false;
+    if(m.closeTime&&new Date()>m.closeTime) return false;
+    return !P[m.id]||P[m.id].h===""||P[m.id].a==="";
+  });
   if(missing.length){
     toast(`⚠ ${missing.length} matches still empty!`,"err");
     document.getElementById("h_"+missing[0].id)?.scrollIntoView({behavior:"smooth",block:"center"});
