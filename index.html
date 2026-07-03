@@ -764,7 +764,7 @@ window.lockMatch=async(phase, matchId)=>{
     GM.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};});
     KO_PHASES.forEach(ph=>ph.matches.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};;}));
     allPreds[matchId]=p;
-    await setDoc(doc(db,"predictions",user.uid),{email:user.email,name:uName,predictions:allPreds,submittedAt:new Date().toISOString()},{merge:true});
+    await setDoc(doc(db,"predictions",CU.email),{email:CU.email,name:CU.name,predictions:allPreds,submittedAt:new Date().toISOString()},{merge:true});
     toast(`🔒 ${m.home} vs ${m.away} locked in!`,"ok");
     // Update button
     const btn=document.getElementById("lock_"+matchId);
