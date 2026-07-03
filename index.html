@@ -717,7 +717,7 @@ function renderPicks(){
       </div>`;
     });
     h+=`</div>`;
-    if(!phSub&&!phClosed) h+=`<button class="sub-btn" onclick="submit('${ph.key}')">🔒 LOCK IN ${ph.label.toUpperCase()}</button>`;
+    // Individual lock buttons per match - no global submit for KO phases
   });
 
   document.getElementById("picksBody").innerHTML=h;
@@ -764,7 +764,8 @@ window.lockMatch=async(phase, matchId)=>{
     GM.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};});
     KO_PHASES.forEach(ph=>ph.matches.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};;}));
     allPreds[matchId]=p;
-    await setDoc(doc(db,"predictions",CU.email),{email:CU.email,name:CU.name,predictions:allPreds,submittedAt:new Date().toISOString()},{merge:true});
+    await setDoc(doc(db,"predictions",CU.email),{email:CU.email,name:CU.name,preds:allPreds,submittedAt:new Date().toISOString()},{merge:true});
+    P[matchId]=p;
     toast(`🔒 ${m.home} vs ${m.away} locked in!`,"ok");
     // Update button
     const btn=document.getElementById("lock_"+matchId);
