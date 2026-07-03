@@ -177,7 +177,7 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   <div class="hdr">
     <div class="hdr-top">
       <div class="brand">
-        <img src="" id="logo2" alt="">
+        
         <span class="brand-tag">BOGOTÁ · FIFA WC 2026</span>
       </div>
       <div class="u-area">
@@ -343,7 +343,7 @@ const RESULTS = {
 const PHASES = {
   groups:{ open:new Date("2026-06-01T00:00:00-05:00"), close:new Date("2026-06-10T23:59:00-05:00") },
   r32:   { open:new Date("2026-06-27T22:00:00-05:00"), close:new Date("2026-06-29T15:29:00-05:00") },
-  r16:   { open:new Date("2026-07-03T22:00:00-05:00"), close:new Date("2026-07-07T15:00:00-05:00") },
+  r16:   { open:new Date("2026-07-03T09:00:00-05:00"), close:new Date("2026-07-07T15:00:00-05:00") },
   qf:    { open:new Date("2026-07-07T21:00:00-05:00"), close:new Date("2026-07-09T14:30:00-05:00") },
   sf:    { open:new Date("2026-07-11T22:00:00-05:00"), close:new Date("2026-07-14T12:30:00-05:00") },
   fin:   { open:new Date("2026-07-15T15:00:00-05:00"), close:new Date("2026-07-18T14:30:00-05:00") },
@@ -446,7 +446,7 @@ const KO_PHASES = [
       {id:"R15",home:"Argentina",   hc:"ar",    away:"Cape Verde",  ac:"cv",   date:"Jul 3", time:"17:00"},
       {id:"R16",home:"Colombia",    hc:"co",    away:"Ghana",       ac:"gh",   date:"Jul 3", time:"20:30"},
     ]},
-  { key:"r16", label:"Round of 16", window:"Open: Jul 3 22:00 → Close: Jul 7 15:00 COT",
+  { key:"r16", label:"Round of 16", window:"Open: Jul 3 09:00 → Close: Jul 7 15:00 COT",
     matches:[
       {id:"S1",home:"Canada",   hc:"ca",    away:"Morocco",  ac:"ma",    date:"Jul 4",time:"12:00",closeTime:new Date("2026-07-04T11:59:00-05:00")},
       {id:"S2",home:"Paraguay", hc:"py",    away:"France",   ac:"fr",    date:"Jul 4",time:"16:00",closeTime:new Date("2026-07-04T15:59:00-05:00")},
@@ -630,7 +630,6 @@ function showApp(){
 }
 
 // Auto-login
-window.addEventListener("DOMContentLoaded", ()=>{const l=document.querySelector("img[src^='data:']");const l2=document.getElementById("logo2");if(l&&l2)l2.src=l.src;});
 window.addEventListener("DOMContentLoaded",async()=>{
   const s=localStorage.getItem("dp_sess");
   if(s){
