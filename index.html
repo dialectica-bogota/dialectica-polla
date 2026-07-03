@@ -136,6 +136,9 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 .toast.ok{background:var(--green);color:#fff}
 .toast.err{background:var(--red);color:#fff}
 .toast.show{transform:translateX(-50%) translateY(0)}
+.lock-btn{display:block;margin-top:6px;padding:4px 8px;background:#f59e0b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;width:100%;text-align:center;}
+.lock-btn:hover{background:#d97706;}
+.lock-btn.locked{background:#10b981;cursor:default;}
 </style>
 </head>
 <body>
@@ -340,7 +343,7 @@ const RESULTS = {
 const PHASES = {
   groups:{ open:new Date("2026-06-01T00:00:00-05:00"), close:new Date("2026-06-10T23:59:00-05:00") },
   r32:   { open:new Date("2026-06-27T22:00:00-05:00"), close:new Date("2026-06-29T15:29:00-05:00") },
-  r16:   { open:new Date("2026-07-03T22:00:00-05:00"), close:new Date("2026-07-04T11:30:00-05:00") },
+  r16:   { open:new Date("2026-07-03T22:00:00-05:00"), close:new Date("2026-07-07T15:00:00-05:00") },
   qf:    { open:new Date("2026-07-07T21:00:00-05:00"), close:new Date("2026-07-09T14:30:00-05:00") },
   sf:    { open:new Date("2026-07-11T22:00:00-05:00"), close:new Date("2026-07-14T12:30:00-05:00") },
   fin:   { open:new Date("2026-07-15T15:00:00-05:00"), close:new Date("2026-07-18T14:30:00-05:00") },
