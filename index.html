@@ -701,9 +701,10 @@ function renderPicks(){
       const p=P[m.id]||{h:"",a:""};
       const hasResult=RESULTS[m.id]!==undefined;
       const matchClosed=m.closeTime?new Date()>m.closeTime:false;
-      const lk=phSub||phClosed||hasResult||matchClosed;
+      const userLocked=S.locked&&S.locked[m.id]===true;
+      const lk=phSub||phClosed||hasResult||matchClosed||userLocked;
       const cls=lk?"si lk":"si";
-      const showLockBtn=ph.key!=="groups"&&!hasResult&&!matchClosed&&!phClosed;
+      const showLockBtn=ph.key!=="groups"&&!hasResult&&!matchClosed&&!phClosed&&!userLocked;
       h+=`<div class="mrow">
         <div class="mt home">${flag(m.hc)}<span class="tn">${m.home}</span></div>
         <div class="si-wrap">
@@ -764,12 +765,13 @@ window.lockMatch=async(phase, matchId)=>{
     GM.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};});
     KO_PHASES.forEach(ph=>ph.matches.forEach(m2=>{allPreds[m2.id]=P[m2.id]||{h:"",a:""};;}));
     allPreds[matchId]=p;
-    await setDoc(doc(db,"predictions",CU.email),{email:CU.email,name:CU.name,preds:allPreds,submittedAt:new Date().toISOString()},{merge:true});
+    // Save prediction and mark match as locked
+    if(!S.locked) S.locked={};
+    S.locked[matchId]=true;
+    await setDoc(doc(db,"predictions",CU.email),{email:CU.email,name:CU.name,preds:allPreds,submitted:S,submittedAt:new Date().toISOString()},{merge:true});
     P[matchId]=p;
     toast(`🔒 ${m.home} vs ${m.away} locked in!`,"ok");
-    // Update button
-    const btn=document.getElementById("lock_"+matchId);
-    if(btn){btn.textContent="🔒 Locked";btn.disabled=true;btn.classList.add("locked");}
+    renderPicks();
   }catch(e){toast("Error saving: "+e.message,"err");}
 };
 
