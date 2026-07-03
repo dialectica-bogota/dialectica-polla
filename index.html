@@ -673,7 +673,6 @@ function renderPicks(){
           <input type="number" min="0" max="20" class="${cls}" id="h_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','h',this.value)">
           <span class="sd">–</span>
           <input type="number" min="0" max="20" class="${cls}" id="a_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','a',this.value)">
-          ${showLockBtn?`<button id="lock_${m.id}" class="lock-btn" onclick="lockMatch('${ph.key}','${m.id}')">🔒 Lock In</button>`:""}
         </div>
         <div class="mt away"><span class="tn">${m.away}</span>${flag(m.ac)}</div>
         <div class="mmeta">${m.date} · ${m.time} COT</div>
