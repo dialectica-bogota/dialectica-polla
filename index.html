@@ -850,8 +850,8 @@ function subLB(){
       const rows=[];
       snap.forEach(d=>{
         const data=d.data();
-        const hasSub=data.submitted&&(data.submitted===true||(typeof data.submitted==="object"&&Object.values(data.submitted).some(Boolean)));
-        if(!hasSub)return;
+        const hasPreds=data.preds&&Object.keys(data.preds).length>0;
+        if(!hasPreds)return;
         const{pts,ex,wn}=calcPts(data.preds||{});
         rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
       });
