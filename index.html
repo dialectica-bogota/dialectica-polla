@@ -346,13 +346,14 @@ const RESULTS = {
   "S2": {h:0, a:1},  // Paraguay 0-1 France (Jul 4)
   "S3": {h:1, a:2},  // Brazil 1-2 Norway (Jul 5)
   "S4": {h:2, a:3},  // Mexico 2-3 England (Jul 5)
+  "S5": {h:0, a:1},  // Portugal 0-1 Spain (Jul 6)
 };
 
 const PHASES = {
   groups:{ open:new Date("2026-06-01T00:00:00-05:00"), close:new Date("2026-06-10T23:59:00-05:00") },
   r32:   { open:new Date("2026-06-27T22:00:00-05:00"), close:new Date("2026-06-29T15:29:00-05:00") },
   r16:   { open:new Date("2026-07-03T09:00:00-05:00"), close:new Date("2026-07-07T15:00:00-05:00") },
-  qf:    { open:new Date("2026-07-07T21:00:00-05:00"), close:new Date("2026-07-09T14:30:00-05:00") },
+  qf:    { open:new Date("2026-07-07T21:00:00-05:00"), close:new Date("2026-07-11T21:00:00-05:00") },
   sf:    { open:new Date("2026-07-11T22:00:00-05:00"), close:new Date("2026-07-14T12:30:00-05:00") },
   fin:   { open:new Date("2026-07-15T15:00:00-05:00"), close:new Date("2026-07-18T14:30:00-05:00") },
 };
@@ -465,12 +466,12 @@ const KO_PHASES = [
       {id:"S7",home:"Argentina",hc:"ar",    away:"Egypt",    ac:"eg",    date:"Jul 7",time:"11:00",closeTime:new Date("2026-07-07T10:59:00-05:00")},
       {id:"S8",home:"Switzerland",hc:"ch",  away:"Colombia", ac:"co",    date:"Jul 7",time:"15:00",closeTime:new Date("2026-07-07T14:59:00-05:00")},
     ]},
-  { key:"qf", label:"Quarter-finals", window:"Open: Jul 7 21:00 → Close: Jul 9 14:30 COT",
+  { key:"qf", label:"Quarter-finals", window:"Open: Jul 7 21:00 → Close: Jul 11 21:00 COT",
     matches:[
-      {id:"Q1",home:"W R16-1",hc:"un",away:"W R16-2",ac:"un",date:"Jul 9", time:"15:00"},
-      {id:"Q2",home:"W R16-3",hc:"un",away:"W R16-4",ac:"un",date:"Jul 10",time:"14:00"},
-      {id:"Q3",home:"W R16-5",hc:"un",away:"W R16-6",ac:"un",date:"Jul 11",time:"16:00"},
-      {id:"Q4",home:"W R16-7",hc:"un",away:"W R16-8",ac:"un",date:"Jul 11",time:"20:00"},
+      {id:"Q1",home:"Morocco", hc:"ma",    away:"France",  ac:"fr",    date:"Jul 9", time:"15:00",closeTime:new Date("2026-07-09T14:59:00-05:00")},
+      {id:"Q2",home:"Spain",   hc:"es",    away:"TBD",     ac:"un",    date:"Jul 10",time:"14:00",closeTime:new Date("2026-07-10T13:59:00-05:00")},
+      {id:"Q3",home:"Norway",  hc:"no",    away:"England", ac:"gb-eng",date:"Jul 11",time:"16:00",closeTime:new Date("2026-07-11T15:59:00-05:00")},
+      {id:"Q4",home:"TBD",     hc:"un",    away:"TBD",     ac:"un",    date:"Jul 11",time:"20:00",closeTime:new Date("2026-07-11T19:59:00-05:00")},
     ]},
   { key:"sf", label:"Semi-finals", window:"Open: Jul 11 22:00 → Close: Jul 14 12:30 COT",
     matches:[
