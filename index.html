@@ -494,7 +494,7 @@ let CU=null, P={}, S={}, openCards=new Set(), flt="all", lbUnsub=null;
 // S = submitted   {groups:true, r32:true, ...}
 
 const flag=(c,sm)=>`<img src="https://flagcdn.com/w40/${(c||"un").toLowerCase()}.png" class="${sm?"flag-sm":"flag-img"}" alt="" onerror="this.style.display='none'">`;
-const ini=(n)=>n.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase();
+const ini=(n)=>(n||"?").split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase();
 const toast=(m,t="ok")=>{const e=document.getElementById("toast");e.textContent=m;e.className=`toast ${t} show`;clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),3000);};
 
 function judge(pred,res){
@@ -857,7 +857,7 @@ async function subLB(){
       const pr=data.preds||data.predictions||{};
       if(!pr||Object.keys(pr).length===0)return;
       const{pts,ex,wn}=calcPts(pr||{});
-      rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
+      rows.push({email:d.id,name:data.name||d.id,photo:data.photoURL||"",pts,ex,wn});
     });
     renderLB(rows);
   }catch(e){
