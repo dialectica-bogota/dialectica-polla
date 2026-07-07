@@ -860,7 +860,10 @@ async function subLB(){
       rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
     });
     renderLB(rows);
-  }catch(e){console.error("LB error",e);renderLB([]);}
+  }catch(e){
+    console.error("LB error",e);
+    document.getElementById("lbBody").innerHTML=`<div class="bn bn-info">LB Error: ${e.message}</div>`;
+  }
 }
 
 // ── ALL PICKS ─────────────────────────────────────────────────
