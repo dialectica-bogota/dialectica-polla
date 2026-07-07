@@ -686,7 +686,7 @@ function renderPicks(){
           <input type="number" min="0" max="20" class="${cls}" id="a_${m.id}" placeholder="–" ${lk?"readonly":""} oninput="upd('${m.id}','a',this.value)">
         </div>
         <div class="mt away"><span class="tn">${m.away}</span>${flag(m.ac)}</div>
-        <div class="mmeta">${m.date} · ${m.time} COT</div>
+        <div class="mmeta">${m.date} · ${m.time} COT${m.closeTime&&!hasResult?` · Locks ${m.closeTime.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",timeZone:"America/Bogota"})}`:""}</div>
       </div>`;
     });
     h+=`</div>`;
@@ -725,7 +725,7 @@ function renderPicks(){
           ${showLockBtn?`<button id="lock_${m.id}" class="lock-btn" onclick="lockMatch('${ph.key}','${m.id}')">🔒 Lock In</button>`:""}
         </div>
         <div class="mt away"><span class="tn">${m.away}</span>${flag(m.ac)}</div>
-        <div class="mmeta">${m.date} · ${m.time} COT</div>
+        <div class="mmeta">${m.date} · ${m.time} COT${m.closeTime&&!hasResult?` · Locks ${m.closeTime.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",timeZone:"America/Bogota"})}`:""}</div>
       </div>`;
     });
     h+=`</div>`;
@@ -846,20 +846,20 @@ function renderLB(rows){
   document.getElementById("lbBody").innerHTML=h;
 }
 
-function subLB(){
-  if(lbUnsub)lbUnsub();
+async function subLB(){
+  if(lbUnsub){lbUnsub();lbUnsub=null;}
   try{
-    lbUnsub=onSnapshot(collection(db,"predictions"),snap=>{
-      const rows=[];
-      snap.forEach(d=>{
-        const data=d.data();
-        const pr=data.preds||data.predictions||{};
-        if(!pr||Object.keys(pr).length===0)return;
-        const{pts,ex,wn}=calcPts(pr||{});
-        rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
-      });
-      renderLB(rows);
-    },()=>renderLB([]));
+    document.getElementById("lbBody").innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">Loading...</div>';
+    const snap=await getDocs(collection(db,"predictions"));
+    const rows=[];
+    snap.forEach(d=>{
+      const data=d.data();
+      const pr=data.preds||data.predictions||{};
+      if(!pr||Object.keys(pr).length===0)return;
+      const{pts,ex,wn}=calcPts(pr||{});
+      rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
+    });
+    renderLB(rows);
   }catch(e){console.error("LB error",e);renderLB([]);}
 }
 
