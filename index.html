@@ -846,18 +846,20 @@ function renderLB(rows){
   document.getElementById("lbBody").innerHTML=h;
 }
 
-async function subLB(){
+function subLB(){
+  if(lbUnsub)lbUnsub();
   try{
-    const snap=await getDocs(collection(db,"predictions"));
-    const rows=[];
-    snap.forEach(d=>{
-      const data=d.data();
-      const pr=data.preds||data.predictions||{};
-      if(!pr||Object.keys(pr).length===0)return;
-      const{pts,ex,wn}=calcPts(pr||{});
-      rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
-    });
-    renderLB(rows);
+    lbUnsub=onSnapshot(collection(db,"predictions"),snap=>{
+      const rows=[];
+      snap.forEach(d=>{
+        const data=d.data();
+        const pr=data.preds||data.predictions||{};
+        if(!pr||Object.keys(pr).length===0)return;
+        const{pts,ex,wn}=calcPts(pr||{});
+        rows.push({email:d.id,name:data.name,photo:data.photoURL||"",pts,ex,wn});
+      });
+      renderLB(rows);
+    },()=>renderLB([]));
   }catch(e){console.error("LB error",e);renderLB([]);}
 }
 
