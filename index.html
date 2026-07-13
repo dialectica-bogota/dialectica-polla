@@ -351,6 +351,9 @@ const RESULTS = {
   "S7": {h:3, a:2},  // Argentina 3-2 Egypt (Jul 7)
   "S8": {h:0, a:0},  // Switzerland 0-0 Colombia AET (Jul 7) — Switzerland wins 4-3 pens
   "Q1": {h:2, a:0},  // France 2-0 Morocco (Jul 9)
+  "Q2": {h:2, a:1},  // Spain 2-1 Belgium (Jul 10)
+  "Q3": {h:2, a:1},  // England 2-1 Norway AET (Jul 11)
+  "Q4": {h:3, a:1},  // Argentina 3-1 Switzerland AET (Jul 11)
 };
 
 const PHASES = {
@@ -358,7 +361,7 @@ const PHASES = {
   r32:   { open:new Date("2026-06-27T22:00:00-05:00"), close:new Date("2026-06-29T15:29:00-05:00") },
   r16:   { open:new Date("2026-07-03T09:00:00-05:00"), close:new Date("2026-07-07T15:00:00-05:00") },
   qf:    { open:new Date("2026-07-07T10:00:00-05:00"), close:new Date("2026-07-11T21:00:00-05:00") },
-  sf:    { open:new Date("2026-07-11T22:00:00-05:00"), close:new Date("2026-07-14T12:30:00-05:00") },
+  sf:    { open:new Date("2026-07-11T10:00:00-05:00"), close:new Date("2026-07-15T14:00:00-05:00") },
   fin:   { open:new Date("2026-07-15T15:00:00-05:00"), close:new Date("2026-07-18T14:30:00-05:00") },
 };
 function pStatus(ph){ const n=new Date(),p=PHASES[ph]; if(!p)return"hidden"; if(n<p.open)return"upcoming"; if(n>p.close)return"closed"; return"open"; }
@@ -477,10 +480,10 @@ const KO_PHASES = [
       {id:"Q3",home:"Norway",  hc:"no",    away:"England", ac:"gb-eng",date:"Jul 11",time:"16:00",closeTime:new Date("2026-07-11T15:59:00-05:00")},
       {id:"Q4",home:"Argentina",hc:"ar",   away:"Switzerland",ac:"ch", date:"Jul 11",time:"20:00",closeTime:new Date("2026-07-11T19:59:00-05:00")},
     ]},
-  { key:"sf", label:"Semi-finals", window:"Open: Jul 11 22:00 → Close: Jul 14 12:30 COT",
+  { key:"sf", label:"Semi-finals", window:"Open now — each match locks 1 min before kickoff",
     matches:[
-      {id:"SF1",home:"W QF-1",hc:"un",away:"W QF-2",ac:"un",date:"Jul 14",time:"13:00"},
-      {id:"SF2",home:"W QF-3",hc:"un",away:"W QF-4",ac:"un",date:"Jul 15",time:"13:00"},
+      {id:"SF1",home:"France",  hc:"fr",    away:"Spain",     ac:"es",date:"Jul 14",time:"14:00",closeTime:new Date("2026-07-14T13:59:00-05:00")},
+      {id:"SF2",home:"England", hc:"gb-eng",away:"Argentina", ac:"ar",date:"Jul 15",time:"14:00",closeTime:new Date("2026-07-15T13:59:00-05:00")},
     ]},
   { key:"fin", label:"3rd Place & Final", window:"Open: Jul 15 15:00 → Close: Jul 18 14:30 COT",
     matches:[
