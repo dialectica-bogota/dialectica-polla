@@ -900,13 +900,32 @@ window.renderAll=async()=>{
           <span class="pc-pts">${pts} pts</span>
           <span class="chev ${open?"open":""}">▾</span>
         </div><div class="pc-body" style="${open?"":"display:none"}">`;
+        // Show group matches
         shown.forEach(m=>{
           const p=pl.preds[m.id]||{h:"?",a:"?"};
+          const res=RESULTS[m.id];
+          const got=res&&p.h!=="?"?(+p.h===res.h&&+p.a===res.a?"✅":(((+p.h>+p.a?"H":+p.a>+p.h?"A":"D")===(res.h>res.a?"H":res.a>res.h?"A":"D"))?"🟡":"❌")):"";
           h+=`<div class="pr-row">
             <span style="display:flex;align-items:center;gap:4px">${flag(m.hc,true)} ${m.home}</span>
-            <span class="pr-score">${p.h||"?"}–${p.a||"?"}</span>
+            <span class="pr-score">${got} ${p.h||"?"}–${p.a||"?"}</span>
             <span style="display:flex;align-items:center;justify-content:flex-end;gap:4px">${m.away} ${flag(m.ac,true)}</span>
           </div>`;
+        });
+        // Show KO matches
+        KO_PHASES.forEach(ph=>{
+          if(ph.key==="sf"||ph.key==="fin"||ph.key==="3rd") return;
+          const phLabel=ph.label;
+          h+=`<div class="pr-row" style="background:rgba(255,255,255,0.05);font-weight:600;padding:6px 12px;margin-top:8px">${phLabel}</div>`;
+          ph.matches.forEach(m=>{
+            const p=pl.preds[m.id]||{h:"?",a:"?"};
+            const res=RESULTS[m.id];
+            const got=res&&p.h!=="?"?(+p.h===res.h&&+p.a===res.a?"✅":(((+p.h>+p.a?"H":+p.a>+p.h?"A":"D")===(res.h>res.a?"H":res.a>res.h?"A":"D"))?"🟡":"❌")):"";
+            h+=`<div class="pr-row">
+              <span style="display:flex;align-items:center;gap:4px">${flag(m.hc,true)} ${m.home}</span>
+              <span class="pr-score">${got} ${p.h||"?"}–${p.a||"?"}</span>
+              <span style="display:flex;align-items:center;justify-content:flex-end;gap:4px">${m.away} ${flag(m.ac,true)}</span>
+            </div>`;
+          });
         });
         h+=`</div></div>`;
       });
