@@ -311,8 +311,8 @@ const RESULTS = {
   "F5": {h:1, a:1},  // Japan 1-1 Sweden (Jun 25)
   "F6": {h:1, a:3},  // Tunisia 1-3 Netherlands (Jun 25)
   // Jun 26
-  "G5": {h:1, a:1},  // Egypt 1-1 Iran (Jun 26)
-  "G6": {h:1, a:5},  // New Zealand 1-5 Belgium (Jun 26)
+  "G5": {h:1, a:5},  // New Zealand 1-5 Belgium (Jun 26)
+  "G6": {h:1, a:1},  // Egypt 1-1 Iran (Jun 26)
   "H5": {h:0, a:0},  // Cape Verde 0-0 Saudi Arabia (Jun 26)
   "H6": {h:0, a:1},  // Uruguay 0-1 Spain (Jun 26)
   "I5": {h:4, a:1},  // Norway 4-1 France (Jun 26)
@@ -513,7 +513,7 @@ function judge(pred,res){
 function calcPts(pr){
   let pts=0,ex=0,wn=0;
   // Matches where home/away order was shown differently at different times
-  const flipped=new Set(["Q1","Q3","G6"]);
+  const flipped=new Set(["Q1","Q3","G5"]);
   Object.entries(RESULTS).forEach(([id,res])=>{
     const p=pr[id];
     if(!p||p.h===""||p.a==="") return;
