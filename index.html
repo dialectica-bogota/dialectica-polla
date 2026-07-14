@@ -354,6 +354,7 @@ const RESULTS = {
   "Q2": {h:2, a:1},  // Spain 2-1 Belgium (Jul 10)
   "Q3": {h:1, a:2},  // Norway 1-2 England AET (Jul 11)
   "Q4": {h:3, a:1},  // Argentina 3-1 Switzerland AET (Jul 11)
+  "SF1":{h:0, a:2},  // France 0-2 Spain (Jul 14)
 };
 
 const PHASES = {
@@ -930,7 +931,7 @@ window.renderAll=async()=>{
         });
         // Show KO matches
         KO_PHASES.forEach(ph=>{
-          if(ph.key==="sf"||ph.key==="fin"||ph.key==="3rd") return;
+          // Show all KO phases including SF and Finals
           const phLabel=ph.label;
           h+=`<div class="pr-row" style="background:rgba(255,255,255,0.05);font-weight:600;padding:6px 12px;margin-top:8px">${phLabel}</div>`;
           ph.matches.forEach(m=>{
