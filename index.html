@@ -352,7 +352,7 @@ const RESULTS = {
   "S8": {h:0, a:0},  // Switzerland 0-0 Colombia AET (Jul 7) — Switzerland wins 4-3 pens
   "Q1": {h:0, a:2},  // Morocco 0-2 France (Jul 9)
   "Q2": {h:2, a:1},  // Spain 2-1 Belgium (Jul 10)
-  "Q3": {h:2, a:1},  // England 2-1 Norway AET (Jul 11)
+  "Q3": {h:1, a:2},  // Norway 1-2 England AET (Jul 11)
   "Q4": {h:3, a:1},  // Argentina 3-1 Switzerland AET (Jul 11)
 };
 
@@ -512,15 +512,32 @@ function judge(pred,res){
 
 function calcPts(pr){
   let pts=0,ex=0,wn=0;
+  // Matches where home/away order was shown differently at different times
+  const flipped=new Set(["Q1","Q3"]);
   Object.entries(RESULTS).forEach(([id,res])=>{
     const p=pr[id];
     if(!p||p.h===""||p.a==="") return;
     const ph=+p.h,pa=+p.a;
-    if(ph===res.h&&pa===res.a){pts+=3;ex++;}
+    // Check normal order
+    let earned=0;
+    if(ph===res.h&&pa===res.a){earned=3;}
     else{
       const pw=ph>pa?"H":pa>ph?"A":"D",rw=res.h>res.a?"H":res.a>res.h?"A":"D";
-      if(pw===rw){pts+=1;wn++;}
+      if(pw===rw) earned=1;
     }
+    // For flipped matches, also check inverted order and take best
+    if(flipped.has(id)){
+      const ph2=pa,pa2=ph;
+      let earned2=0;
+      if(ph2===res.h&&pa2===res.a){earned2=3;}
+      else{
+        const pw2=ph2>pa2?"H":pa2>ph2?"A":"D",rw=res.h>res.a?"H":res.a>res.h?"A":"D";
+        if(pw2===rw) earned2=1;
+      }
+      earned=Math.max(earned,earned2);
+    }
+    if(earned===3){pts+=3;ex++;}
+    else if(earned===1){pts+=1;wn++;}
   });
   return{pts,ex,wn};
 }
