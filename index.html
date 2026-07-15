@@ -355,6 +355,7 @@ const RESULTS = {
   "Q3": {h:1, a:2},  // Norway 1-2 England AET (Jul 11)
   "Q4": {h:3, a:1},  // Argentina 3-1 Switzerland AET (Jul 11)
   "SF1":{h:0, a:2},  // France 0-2 Spain (Jul 14)
+  "SF2":{h:1, a:2},  // England 1-2 Argentina (Jul 15)
 };
 
 const PHASES = {
@@ -363,7 +364,7 @@ const PHASES = {
   r16:   { open:new Date("2026-07-03T09:00:00-05:00"), close:new Date("2026-07-07T15:00:00-05:00") },
   qf:    { open:new Date("2026-07-07T10:00:00-05:00"), close:new Date("2026-07-11T21:00:00-05:00") },
   sf:    { open:new Date("2026-07-11T10:00:00-05:00"), close:new Date("2026-07-15T14:00:00-05:00") },
-  fin:   { open:new Date("2026-07-15T15:00:00-05:00"), close:new Date("2026-07-18T14:30:00-05:00") },
+  fin:   { open:new Date("2026-07-15T10:00:00-05:00"), close:new Date("2026-07-19T13:00:00-05:00") },
 };
 function pStatus(ph){ const n=new Date(),p=PHASES[ph]; if(!p)return"hidden"; if(n<p.open)return"upcoming"; if(n>p.close)return"closed"; return"open"; }
 
@@ -486,10 +487,10 @@ const KO_PHASES = [
       {id:"SF1",home:"France",  hc:"fr",    away:"Spain",     ac:"es",date:"Jul 14",time:"14:00",closeTime:new Date("2026-07-14T13:59:00-05:00")},
       {id:"SF2",home:"England", hc:"gb-eng",away:"Argentina", ac:"ar",date:"Jul 15",time:"14:00",closeTime:new Date("2026-07-15T13:59:00-05:00")},
     ]},
-  { key:"fin", label:"3rd Place & Final", window:"Open: Jul 15 15:00 → Close: Jul 18 14:30 COT",
+  { key:"fin", label:"3rd Place & Final", window:"Open now — locks 1 min before kickoff",
     matches:[
-      {id:"3PL",home:"L SF-1",hc:"un",away:"L SF-2",ac:"un",date:"Jul 18",time:"15:00"},
-      {id:"FIN",home:"W SF-1",hc:"un",away:"W SF-2",ac:"un",date:"Jul 19",time:"13:00"},
+      {id:"3PL",home:"France",  hc:"fr",    away:"England",ac:"gb-eng",date:"Jul 18",time:"15:00",closeTime:new Date("2026-07-18T14:59:00-05:00")},
+      {id:"FIN",home:"Spain",   hc:"es",    away:"Argentina",ac:"ar",date:"Jul 19",time:"13:00",closeTime:new Date("2026-07-19T12:59:00-05:00")},
     ]},
 ];
 
