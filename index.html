@@ -925,7 +925,19 @@ window.renderAll=async()=>{
         shown.forEach(m=>{
           const p=pl.preds[m.id]||{h:"?",a:"?"};
           const res=RESULTS[m.id];
-          const got=res&&p.h!=="?"?(+p.h===res.h&&+p.a===res.a?"✅":(((+p.h>+p.a?"H":+p.a>+p.h?"A":"D")===(res.h>res.a?"H":res.a>res.h?"A":"D"))?"🟡":"❌")):"";
+          const flippedIds=new Set(["Q1","Q3","G5"]);
+          let got="";
+          if(res&&p.h!=="?"){
+            const ph=+p.h,pa=+p.a,rh=res.h,ra=res.a;
+            const pw=ph>pa?"H":pa>ph?"A":"D",rw=rh>ra?"H":ra>rh?"A":"D";
+            if(ph===rh&&pa===ra) got="✅";
+            else if(pw===rw) got="🟡";
+            else if(flippedIds.has(m.id)){
+              const pw2=pa>ph?"H":ph>pa?"A":"D";
+              if(pw2===rw) got="🟡";
+              else got="❌";
+            } else got="❌";
+          }
           h+=`<div class="pr-row">
             <span style="display:flex;align-items:center;gap:4px">${flag(m.hc,true)} ${m.home}</span>
             <span class="pr-score">${got} ${p.h||"?"}–${p.a||"?"}</span>
@@ -940,7 +952,19 @@ window.renderAll=async()=>{
           ph.matches.forEach(m=>{
             const p=pl.preds[m.id]||{h:"?",a:"?"};
             const res=RESULTS[m.id];
-            const got=res&&p.h!=="?"?(+p.h===res.h&&+p.a===res.a?"✅":(((+p.h>+p.a?"H":+p.a>+p.h?"A":"D")===(res.h>res.a?"H":res.a>res.h?"A":"D"))?"🟡":"❌")):"";
+            const flippedIds=new Set(["Q1","Q3","G5"]);
+          let got="";
+          if(res&&p.h!=="?"){
+            const ph=+p.h,pa=+p.a,rh=res.h,ra=res.a;
+            const pw=ph>pa?"H":pa>ph?"A":"D",rw=rh>ra?"H":ra>rh?"A":"D";
+            if(ph===rh&&pa===ra) got="✅";
+            else if(pw===rw) got="🟡";
+            else if(flippedIds.has(m.id)){
+              const pw2=pa>ph?"H":ph>pa?"A":"D";
+              if(pw2===rw) got="🟡";
+              else got="❌";
+            } else got="❌";
+          }
             h+=`<div class="pr-row">
               <span style="display:flex;align-items:center;gap:4px">${flag(m.hc,true)} ${m.home}</span>
               <span class="pr-score">${got} ${p.h||"?"}–${p.a||"?"}</span>
